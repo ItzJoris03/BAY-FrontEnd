@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { ReactNode, Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import type { Language, Route as RouteType } from '@/types/routes';
 import { ROUTES_CONF } from '@/utils/DefaultFiles';
@@ -20,7 +20,7 @@ const generateRoutes = (
     routes: Record<string, RouteType>,
     language: Language,
     basePath = ""
-): JSX.Element[] => {
+): ReactNode[] => {
     return Object.keys(routes).map((path) => {
         const route = routes[path];
         const fullPath = `${basePath}${getRoutePath(path, route, language)}`;

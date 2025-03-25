@@ -24,7 +24,8 @@ const Section: React.FC<{ children: React.ReactNode, className?: string }> = ({ 
     );
 }
 
+export default Page;
+
 export {
-    Page,
     Section
 };

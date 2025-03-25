@@ -1,6 +1,6 @@
 import AboutMe from '@/components/About';
 import Banner from '@/components/Banner';
-import { Page } from '@/components/Components';
+import Page from '@/components/Components';
 import FeaturedContent from '@/components/FeaturedContent';
 import Footer from '@/components/Footer';
 import NewsletterSignup from '@/components/Newletter';

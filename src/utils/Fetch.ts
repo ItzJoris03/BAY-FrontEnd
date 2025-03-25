@@ -33,21 +33,21 @@ class Fetcher {
             url,
             ...config,
         })
-        .then(response => {
-            if (method === 'GET') {
-                // Cache the data for GET requests
-                cache.set(requestKey, response.data);
-            }
-            return response.data;
-        })
-        .catch(error => {
-            console.error(`Error fetching data from ${url}:`, error);
-            throw error;
-        })
-        .finally(() => {
-            // Remove the request from pendingRequests once completed
-            this.pendingRequests.delete(requestKey);
-        });
+            .then(response => {
+                if (method === 'GET') {
+                    // Cache the data for GET requests
+                    cache.set(requestKey, response.data);
+                }
+                return response.data;
+            })
+            .catch(error => {
+                console.error(`Error fetching data from ${url}:`, error);
+                throw error;
+            })
+            .finally(() => {
+                // Remove the request from pendingRequests once completed
+                this.pendingRequests.delete(requestKey);
+            });
 
         this.pendingRequests.set(requestKey, requestPromise);
         return requestPromise;
