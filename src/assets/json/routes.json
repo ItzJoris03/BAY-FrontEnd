@@ -1,0 +1,119 @@
+{
+    "_COMMENT": "DO NOT EDIT THIS ROUTES CONFIG!",
+    "_BASE_FOLDER": "views",
+    "config": {
+        "default_language": "com",
+        "language_files": {
+            "com": "default.content",
+            "se": "se.content",
+            "nl": "en.content"
+        },
+        "domainname": "botanicsandyou",
+        "extensions": {
+            "default": "com",
+            "registered": ["nl", "se", "com"]
+        }
+    },
+    "routes": {
+        "/": {
+            "filename": "Home",
+            "linkname": {
+                "nl": "Home",
+                "se": "Hem",
+                "com": "Home"
+            },
+            "config": {
+                "usePathAsRoute": true
+            }
+        },
+        "/about": {
+            "filename": "About",
+            "linkname": {
+                "nl": "Over",
+                "se": "Om",
+                "com": "About"
+            }
+        },
+        "/wiki": {
+            "filename": "Wiki",
+            "linkname": {
+                "nl": "Wiki",
+                "se": "Wiki",
+                "com": "Wiki"
+            },
+            "children": {
+                "/recipes": {
+                    "filename": "Recipes",
+                    "linkname": {
+                        "nl": "Recepten",
+                        "se": "Recepter",
+                        "com": "Recipes"
+                    }
+                },
+                "/plants": {
+                    "filename": "Plants",
+                    "linkname": {
+                        "nl": "Planten",
+                        "se": "Växter",
+                        "com": "Plants"
+                    }
+                }
+            }
+        },
+        "/blog": {
+            "filename": "Blog",
+            "linkname": {
+                "nl": "Blog",
+                "se": "Blogg",
+                "com": "Blog"
+            }
+        },
+        "/faq": {
+            "filename": "Faq",
+            "linkname": {
+                "nl": "Faq",
+                "se": "Faq",
+                "com": "Faq"
+            }
+        },
+        "/contact": {
+            "filename": "Contact",
+            "linkname": {
+                "nl": "Contact",
+                "se": "Kontakta",
+                "com": "Contact"
+            }
+        },
+        "/comingsoon": {
+            "config": {
+                "disableMultiLanguageSupport": true
+            },
+            "hideNavbar": true,
+            "filename": "ComingSoon"
+        },
+        "/terms": {
+            "config": {
+                "disableMultiLanguageSupport": true
+            },
+            "filename": "TermsAndPrivacy",
+            "attr": {
+                "id": "terms"
+            }
+        },
+        "/privacy": {
+            "config": {
+                "disableMultiLanguageSupport": true
+            },
+            "filename": "TermsAndPrivacy",
+            "attr": {
+                "id": "privacy"
+            }
+        },
+        "/*": {
+            "filename": "Error",
+            "config": {
+                "usePathAsRoute": true
+            }
+        }
+    }
+}

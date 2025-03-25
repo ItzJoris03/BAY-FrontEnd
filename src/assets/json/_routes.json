@@ -1,0 +1,62 @@
+{
+    "supported_languages": ["en"],
+    "routes": [
+        {
+            "path": "/",
+            "component": "Home",
+            "title": "Home Page",
+            "linkName": "Home",
+            "includeNavbar": true
+        },
+        {
+            "path": "/about",
+            "component": "About",
+            "title": "About Me",
+            "linkName": "About Me"
+        },
+        {
+            "path": "/wiki",
+            "component": "Wiki",
+            "title": "Wiki",
+            "linkName": "Wiki",
+            "subroutes": [
+                {
+                    "path": "recipes",
+                    "component": "Recipes",
+                    "title": "Recipes",
+                    "linkName": "Recipes"
+                },
+                {
+                    "path": "plants",
+                    "component": "Plants",
+                    "title": "Plants",
+                    "linkName": "Plants"
+                }
+            ]
+        },
+        {
+            "path": "/blog",
+            "component": "Blog",
+            "title": "Blog",
+            "linkName": "Blog"
+        },
+        {
+            "path": "/faq",
+            "component": "Faq",
+            "title": "Faq",
+            "linkName": "Faq"
+        },
+        {
+            "path": "/contact",
+            "component": "Contact",
+            "title": "Contact Us",
+            "linkName": "Contact"
+        },
+        {
+            "path": "/comingsoon",
+            "component": "ComingSoon",
+            "linkName": "Coming Soon",
+            "hiddenFromMenu": true
+        }
+    ]
+}

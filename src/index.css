@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+    --font-SourceSans: 'Source Sans 3', sans-serif;
+    --font-PlayfairDisplay: 'Playfair Display', serif;
+
+    --color-white: #fefbf8;
+    --color-black: #101115;
+    --color-gray: #404249;
+    /* bg-lime-700/40 */
+    --color-main: #94b17b;
+    --color-mainDarker: color-mix(in srgb, var(--color-lime-900) 80%, transparent);
+}

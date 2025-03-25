@@ -1,0 +1,20 @@
+{
+    "_COMMENT": "This file contains all data that exists on the website. Change only if you know what you are doing.",
+    "config": {
+        "lang": "en"
+    },
+    "data": {
+        "banner": {
+            "title": "The ==magic== of plants and herbs.",
+            "subtitle": "Give mother nature a chance with less ~~distrubuted products~~ but __nature__!",
+            "img": {
+                "filename": "https://images.unsplash.com/photo-1543459176-4426b37223ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "alt": "Natural background image"
+            },
+            "button": {
+                "name": "Check out how",
+                "to": ""
+            }
+        }
+    }
+}
