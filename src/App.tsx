@@ -1,13 +1,13 @@
 // import RouterComponent from '@/components/Router';// import ComingSoon from '@/views/ComingSoon';
 
-// import AppRouter from "@/components/Router"
-import HomePage from "./views/Home"
+import AppRouter from "@/components/Router"
+// import HomePage from "./views/Home"
 
 function App() {
   return (
     <>
-      {/* <AppRouter /> */}
-      <HomePage />
+      <AppRouter />
+      {/* <HomePage /> */}
       {/* <RouterComponent /> */}
       {/* <ComingSoon /> */}
     </>
