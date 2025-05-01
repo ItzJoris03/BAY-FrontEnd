@@ -1,170 +1,187 @@
-import React, { useRef, useCallback, useMemo, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useMemo, useState } from "react";
+import { NavLink } from "react-router-dom";
+import logo from "@/assets/svg/logo/BotanicsYouFull.svg";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { ROUTES_CONF } from "@/utils/DefaultFiles";
+import LanguageSelector from "./LangSelector";
+import { getLanguagePreference } from "@/utils/LanguageHandler";
+import { Route } from "@/types/routes";
+import { getRoutePath } from "@/utils/routing_helper_functions";
 
-import logo from '@/assets/svg/logo/BotanicsYouFull.svg';
-import { filterRoutes } from '@/utils/filters';
-import MobileSubroutesMenu from './MobileNavbar';
-import classNames from '@/utils/classnames';
-import { ROUTES_CONF } from '@/utils/DefaultFiles';
-import { getLanguagePreference } from '@/utils/LanguageHandler';
-import { getRoutePath } from '@/utils/routing_helper_functions';
-import LanguageSelector from './LangSelector';
-import useScrollDirection, { ScrollDirection } from '@/hooks/useScrollDirection';
-import { ChevronDown } from 'lucide-react';
+const filterRoutes = (routes: Record<string, Route>) =>
+    Object.entries(routes).filter(
+        ([, route]) =>
+            route.linkname &&
+            (route?.config?.hiddenFromMenu === undefined ||
+                route?.config.hiddenFromMenu === false)
+    );
 
-export const MobileMenuBackground = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>((_, ref) => (
-    <div ref={ref} className='transition-all duration-500 w-0 bg-white h-screen'></div>
-));
-
-const Line = React.forwardRef<HTMLSpanElement, { className?: string }>(({ className = '' }, ref) => (
-    <span ref={ref} className={`transition-all duration-500 block border-t-2 border-solid border-black w-6 ${className}`}></span>
-));
+const Logo = () => (
+    <NavLink to="/" className="flex items-center">
+        <img
+            src={logo}
+            alt="Botanics&You logo with slogan"
+            className="max-h-14"
+        />
+    </NavLink>
+);
 
 const Navbar: React.FC = () => {
-    const mobileMenuBgRef = useRef<HTMLDivElement>(null);
-    const mobileMenuRef = useRef<HTMLDivElement>(null);
-    const navContainerRef = useRef<HTMLElement>(null);
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
+    const language = useMemo(getLanguagePreference, []);
 
-    const scrollDir = useScrollDirection();
+    const toggleDropdown = (path: string) =>
+        setDropdownOpen(dropdownOpen === path ? null : path);
+    const toggleMobile = () => setMobileOpen((prev) => !prev);
+    const closeAllMenus = () => {
+        setDropdownOpen(null);
+        setMobileOpen(false);
+    };
 
-    const buttonRefs = useRef({
-        button: useRef<HTMLButtonElement>(null),
-        lines: [useRef<HTMLSpanElement>(null), useRef<HTMLSpanElement>(null), useRef<HTMLSpanElement>(null)]
-    });
-
-    useEffect(() => {
-        if (navContainerRef.current) {
-            if (scrollDir == ScrollDirection.up) {
-                navContainerRef.current?.classList.remove('-translate-y-full');
-            } else {
-                navContainerRef.current?.classList.add('-translate-y-full');
-            }
-        }
-    }, [scrollDir]);
-
-    // Memoize filtered routes to avoid re-computation on each render
-    const filteredRoutes = useMemo(() => filterRoutes(ROUTES_CONF.routes), []);
-
-    const toggleClassList = useCallback((elements: Element[], classes: string[]) => {
-        elements.forEach((el) => classes.forEach(cls => el.classList.toggle(cls)));
-    }, []);
-
-    const toggleMobileMenu = useCallback(() => {
-        const { lines } = buttonRefs.current;
-
-        lines.map((line, i) => {
-            if (line.current) {
-                switch (i) {
-                    case 0:
-                        line.current.classList.toggle("rotate-45");
-                        break;
-                    case 1:
-                        line.current.classList.toggle("opacity-0");
-                        line.current.classList.toggle("my-1");
-                        line.current.classList.toggle("-my-0.5");
-                        break;
-                    case 2:
-                        line.current.classList.toggle("-rotate-45");
-                        break;
-                    default:
-                        break;
-                }
-            }
-        })
-
-        // Toggle background panels
-        if (mobileMenuBgRef.current) {
-            toggleClassList([...mobileMenuBgRef.current.children], ["w-0", "w-1/3", "z-10"]);
-        }
-
-        // Toggle mobile menu visibility and animations
-        if (mobileMenuRef.current) {
-            const container = mobileMenuRef.current;
-            const isVisible = container.classList.contains("flex");
-
-            if (isVisible) {
-                toggleClassList([...container.children], ["scale-0"]);
-                setTimeout(() => {
-                    container.classList.toggle("hidden");
-                    container.classList.toggle("flex");
-                }, 250);
-            } else {
-                container.classList.toggle("hidden");
-                container.classList.toggle("flex");
-                setTimeout(() => toggleClassList([...container.children], ["scale-0"]), 100);
-            }
-        }
-    }, [toggleClassList])
+    const filteredRoutes = useMemo(
+        () => filterRoutes(ROUTES_CONF.routes),
+        []
+    );
 
     return (
-        <nav ref={navContainerRef} className="fixed top-0 left-0 transition-transform duration-300 max-h-screen w-full bg-white p-4 px-6 z-20">
-            <div className="container mx-auto flex gap-8 justify-between items-center">
-                <div className="text-white text-3xl font-bold">
-                    <NavLink to="/">
-                        <img
-                            src={logo}
-                            alt="Botanics&You logo with slogan"
-                            className="max-h-16"
-                        />
-                    </NavLink>
-                </div>
-                <div className="hidden md:flex space-x-4">
-                    {filteredRoutes.map(([path, route], index) => {
-                        const subRoutes = route.children ? filterRoutes(route.children) : [];
+        <nav className="bg-white border-b border-gray-200 shadow-sm fixed w-full z-50 p-2 sm:px-6">
+            <div className="max-w-7xl mx-auto px-4 flex justify-between items-center h-16">
+                {/* Logo */}
+                <Logo />
 
-                        return (
-                            <div className='group relative' key={index}>
+                {/* Desktop Menu */}
+                <div className="hidden md:flex items-center gap-6">
+                    {filteredRoutes.map(([path, route]) => {
+                        const hasChildren = !!route.children;
+                        const label = route.linkname?.[language as keyof typeof route.linkname];
+
+                        if (!label) return null;
+
+                        const langPath = getRoutePath(path, getLanguagePreference());
+
+                        return hasChildren ? (
+                            <div key={path} className="relative">
                                 <NavLink
-                                    to={getRoutePath(path, route, getLanguagePreference())}
-                                    className={({ isActive }) => classNames(
-                                        "border-b-2 px-3 py-2 relative flex justify-center items-center gap-2 text-lg font-medium transition-all duration-300",
-                                        {
-                                            "font-medium border-main": isActive,
-                                            "border-transparent group-hover:border-main hover:opacity-75": !isActive,
-                                        }
-                                    )}
+                                    // onClick={() => toggleDropdown(path)}
+                                    to={langPath}
+                                    className="flex items-center gap-1 text-gray-800 hover:text-green-700 font-medium peer cursor-pointer"
                                 >
-                                    {route.linkname?.[getLanguagePreference() as keyof typeof route.linkname]}
-                                    {route.children && (
-                                        <ChevronDown className='w-4 h-fit mb-0.5 group-hover:rotate-180 transition-transform' />
-                                    )}
+                                    {label}
+                                    <ChevronDown size={16} />
                                 </NavLink>
-                                {route.children && (
-                                    <div className='absolute invisible group-hover:visible scale-0 transition-all duration-300 group-hover:scale-100 origin-top flex flex-col items-center gap-2 w-full top-full py-4 bg-white shadow-md rounded-sm'>
-                                        {subRoutes.map(([subpath, subroute], index) => (
+
+                                <div
+                                    className={`${dropdownOpen === path
+                                        ? "opacity-100 translate-y-0 pointer-events-auto"
+                                        : "opacity-0 -translate-y-2 pointer-events-none"
+                                        } absolute top-full left-0 pt-8 min-w-[180px] rounded-lg bg-white shadow-xl transition-all duration-200 ease-out z-40
+                                        peer-hover:opacity-100 peer-hover:translate-y-0 peer-hover:pointer-events-auto
+                                        hover:opacity-100 hover:translate-y-0 hover:pointer-events-auto`}
+                                >
+                                    {Object.entries(route.children!).map(([subPath, child]) => {
+                                        const fullPath = path + subPath;
+                                        const childLangPath = getRoutePath(fullPath, getLanguagePreference());
+                                        const childLabel = child.linkname?.[language as keyof typeof child.linkname];
+                                        if (!childLabel) return null;
+                                        return (
                                             <NavLink
-                                                key={index}
-                                                to={path + getRoutePath(subpath, subroute, getLanguagePreference())}
-                                                className={({ isActive }) => classNames("text-lg font-medium transition-all duration-300", { "font-bold": isActive, "hover:opacity-75": !isActive })}
+                                                key={childLangPath}
+                                                to={childLangPath}
+                                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg"
                                             >
-                                                {subroute.linkname?.[getLanguagePreference() as keyof typeof subroute.linkname]}
+                                                {childLabel}
                                             </NavLink>
-                                        ))}
-                                    </div>
-                                )}
+                                        );
+                                    })}
+                                </div>
                             </div>
+                        ) : (
+                            <NavLink
+                                key={path}
+                                to={langPath}
+                                className="text-gray-800 hover:text-green-700 font-medium"
+                            >
+                                {label}
+                            </NavLink>
                         );
                     })}
+
+                    <LanguageSelector />
                 </div>
+
+                {/* Mobile Hamburger */}
                 <div className="md:hidden">
-                    <button ref={buttonRefs.current.button} onClick={toggleMobileMenu} className="w-fit h-8 transform duration-500 cursor-pointer">
-                        {buttonRefs.current.lines.map((ref, index) => (
-                            <Line ref={ref} key={index} className={index === 1 ? "my-1" : ""} />
-                        ))}
+                    <button onClick={toggleMobile}>
+                        {mobileOpen ? <X size={26} /> : <Menu size={26} />}
                     </button>
                 </div>
-                <LanguageSelector />
             </div>
 
-            {/* Mobile menu */}
-            <div className="md:hidden">
-                <div ref={mobileMenuBgRef} className='absolute top-0 left-0 flex w-full z-[-1]'>
-                    {[...Array(3)].map((_, index) => <MobileMenuBackground key={index} />)}
-                </div>
-                <div ref={mobileMenuRef} className="hidden flex-col space-y-8 px-4 py-8 absolute top-0 left-0 w-full h-screen justify-center z-[-1]">
-                    {filteredRoutes.map(([path, route], index) => (
-                        <MobileSubroutesMenu route={route} path={path} onClick={toggleMobileMenu} key={index} />
-                    ))}
+            {/* Mobile dropdown */}
+            <div
+                className={`md:hidden bg-white transition-all duration-300 overflow-hidden ${mobileOpen ? "max-h-[800px] py-4 px-4" : "max-h-0"
+                    }`}
+            >
+                {filteredRoutes.map(([path, route]) => {
+                    const hasChildren = !!route.children;
+                    const label = route.linkname?.[language as keyof typeof route.linkname];
+
+                    if (!label) return null;
+                    const langPath = getRoutePath(path, getLanguagePreference());
+
+                    return hasChildren ? (
+                        <div key={path} className={`${dropdownOpen ? 'mb-2' : ''}`}>
+                            <button
+                                onClick={() => toggleDropdown(path)}
+                                className="flex w-full justify-between items-center text-gray-800 py-2"
+                            >
+                                {label}
+                                <ChevronDown
+                                    size={16}
+                                    className={`transform transition ${dropdownOpen === path ? "rotate-180" : ""
+                                        }`}
+                                />
+                            </button>
+                            <div
+                                className={`pl-4 mt-1 space-y-1 transition-all duration-200 ${dropdownOpen === path ? "block" : "hidden"
+                                    }`}
+                            >
+                                {Object.entries(route.children!).map(([subPath, child]) => {
+                                    const subLangPath = getRoutePath(subPath, getLanguagePreference());
+                                    const fullPath = path + subLangPath;
+                                    const childLabel = child.linkname?.[language as keyof typeof child.linkname];
+                                    if (!childLabel) return null;
+
+                                    return (
+                                        <NavLink
+                                            key={fullPath}
+                                            to={fullPath}
+                                            className="block text-sm text-gray-700 hover:text-green-700"
+                                            onClick={closeAllMenus}
+                                        >
+                                            {childLabel}
+                                        </NavLink>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ) : (
+                        <NavLink
+                            key={path}
+                            to={langPath}
+                            className="block text-gray-800 py-2"
+                            onClick={closeAllMenus}
+                        >
+                            {label}
+                        </NavLink>
+                    );
+                })}
+
+                {/* Language selector in mobile */}
+                <div className="mt-4">
+                    <span className="text-sm font-medium text-gray-600">Language</span>
+                    <LanguageSelector isMobile />
                 </div>
             </div>
         </nav>

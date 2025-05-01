@@ -1,6 +1,6 @@
 import { Language } from "@/types/routes";
 import { ROUTES_CONF } from "./DefaultFiles";
-import { getCurrentPath, getRoutePath } from "./routing_helper_functions";
+import { getRoutePath } from "./routing_helper_functions";
 
 const LANGUAGE_STORAGE_KEY = 'user_language';
 
@@ -43,31 +43,32 @@ const getDomainForLanguage = (language: string): string | null => {
 };
 
 // Check the current domain and redirect based on the saved language preference
-export const checkAndRedirectLanguage = (oldLang: Language, lang?: Language) => {
+export const checkAndRedirectLanguage = (lang?: Language) => {
     const preferredLanguage = lang || getLanguagePreference();
 
-    // Get the current domain (e.g., botanicsandyou.com)
     const currentDomain = window.location.hostname;
-    const currentRoute = getCurrentPath(oldLang);
-    console.log(currentRoute);
+    const isDev = process.env.NODE_ENV === 'development';
 
-    if (currentRoute) {
-        const newPath = getRoutePath(window.location.pathname, currentRoute, lang);
-        console.log(newPath);
+    // If we can't find a valid route, fallback to pathname
+    const currentPath = window.location.pathname;
+    const newPath = getRoutePath(currentPath, preferredLanguage);
 
-        if (currentDomain === 'localhost') {
-            window.location.href = newPath;
-            return;
-        }
-
-        const expectedDomain = getDomainForLanguage(preferredLanguage);
-        const newRoute = window.location.protocol + '//' + expectedDomain + newPath;
-
-        if (preferredLanguage && expectedDomain && currentDomain !== expectedDomain) {
-            window.location.href = newRoute;
-            return
-        }
+    if (isDev) {
+        // In development, just log instead of redirecting
+        // console.log("[DEV] Redirect path would be:", newPath);
+        window.location.href = newPath;
+        return;
     }
 
-    window.location.href = 'error';
+    const expectedDomain = getDomainForLanguage(preferredLanguage);
+
+    // Only redirect if the domain needs to change
+    if (expectedDomain && currentDomain !== expectedDomain) {
+        const newRoute = window.location.protocol + '//' + expectedDomain + newPath;
+        window.location.href = newRoute;
+        return;
+    }
+
+    // If domain is already correct, just update path
+    window.location.href = newPath;
 };

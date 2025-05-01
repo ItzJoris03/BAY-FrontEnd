@@ -1,12 +1,19 @@
-import Page from '@/components/Components';
+import Page, { Section } from '@/components/Components';
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar/Navbar';
+import { Title } from '@/components/Texts/Heading';
 import React from 'react';
 
-const AboutPage: React.FC = () => {
+const ContactPage: React.FC = () => {
     return (
         <Page>
-            <p>About Page</p>
+            <Navbar />
+            <Section className="min-h-[64vhs]">
+                <Title content="About Page" />
+            </Section>
+            <Footer />
         </Page>
     );
 };
 
-export default AboutPage;
+export default ContactPage;

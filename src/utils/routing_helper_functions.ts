@@ -1,120 +1,85 @@
-
-// import { Lang, languages, ROUTES_CONF } from "@/types/content.d";
-// import { IRoute, IRouteConfig } from "@/types/routes";
-
-import { Language, LinkNames, Route as RouteType } from "@/types/routes";
+import { Language, Route as RouteType } from "@/types/routes";
 import { ROUTES_CONF } from "./DefaultFiles";
 
+export function getRoutePath(
+    originalPath: string,
+    lang: Language,
+): string {
+    const segments = originalPath.split("/").filter(Boolean);
+    // const translated = findRoutePathSegments(segments, ROUTES_CONF.routes, lang, oldLang);
+    const prev: string[] = [];
 
-// export const flattenRoutes = (routesObj: {
-//     [path: string]: IRoute;
-// }) => {
-//     const flattenedRoutes: Array<{
-//         path: string,
-//         linkname: string,
-//     }> = [];
-//     for (const [path, { linkname, children, config }] of Object.entries(routesObj)) {
-//         const nameByLang = linkname && getLinkName(linkname);
+    const translated: string[] = [];
+    for (const segment of segments) {
+        const route = findRoute(prev.join('/') + '/' + segment);
 
-//         if (nameByLang) {
-//             flattenedRoutes.push({
-//                 path: getRoute(path, linkname, config),
-//                 linkname: nameByLang
-//             });
-
-//             if (children) {
-//                 const childrenRoutes = flattenRoutes(children);
-//                 flattenedRoutes.push(...childrenRoutes);
-//             }
-//         }
-//     }
-//     return flattenedRoutes;
-// };
-
-// export const getLanguageFromURL = (): Lang => {
-//     const parts = window.location.pathname.split('/').filter(Boolean);
-
-//     if (parts.length > 0 && languages.includes(parts[0])) {
-//         return parts[0] as Lang;
-//     }
-//     return ROUTES_CONF.config?.default_language || "nl" as Lang;
-// }
-
-// export const getLinkName = (linkname: string | { [lang in Lang]?: string }) => {
-//     return typeof linkname === 'string'
-//         ? linkname : linkname[getLanguageFromURL() as keyof typeof linkname];
-// }
-
-// export const getRoute = (path: string, linkname?: string | undefined | { [lang in Lang]?: string }, routeConfig?: IRouteConfig | undefined, lang = getLanguageFromURL()) => {
-//     if (!(routeConfig || linkname) && path in ROUTES_CONF.routes) {
-//         const ROUTE = ROUTES_CONF.routes[path as keyof typeof ROUTES_CONF.routes] as IRoute;
-//         routeConfig = ROUTE.config;
-//         linkname = ROUTE.linkname;
-//     }
-
-//     if (!routeConfig?.disableMultiLanguageSupport) {
-//         if (ROUTES_CONF.config?.default_language !== lang) {
-//             if (routeConfig?.usePathAsRoute || typeof linkname === 'string' || linkname === undefined || !(lang in linkname)) {
-//                 return `/${lang}/${path.slice(1).toLowerCase()}`;
-//             } else return `/${lang}/${linkname[lang as keyof typeof linkname]?.toLowerCase()}`;
-//         } else {
-//             if (routeConfig?.usePathAsRoute || typeof linkname === 'string' || linkname === undefined || !(lang in linkname)) {
-//                 return path.toLowerCase();
-//             } else return `/${linkname[lang as keyof typeof linkname]?.toLowerCase()}`;
-//         }
-//     } else {
-//         if (routeConfig?.usePathAsRoute || typeof linkname !== 'string') {
-//             return path.toLowerCase();
-//         } else return `/${linkname.toLowerCase()}`;
-//     }
-// }
-
-export const getRoutePath = (path: string, route: RouteType, language: Language): string => {
-    if (route.config?.usePathAsRoute) {
-        return path;
+        if (!route || route.config?.usePathAsRoute) {
+            translated.push(segment.toLowerCase());
+        } else {
+            const translatedSegment = route.linkname?.[lang as keyof typeof route.linkname] || segment;
+            translated.push(translatedSegment.toLowerCase());
+        }
+        prev.push(segment);
     }
 
-    const linkname = route.linkname?.[language as keyof LinkNames];
-    return linkname ? `/${(linkname as string).toLowerCase()}` : path;
-};
+    return "/" + (translated ?? segments).join("/");
+}
 
-export const getCurrentPath = (language: Language): RouteType | null => {
-    const path = window.location.pathname;
 
-    // Helper function to recursively find the route config
-    const findRouteConfig = (currentPath: string, routes: Record<string, RouteType>): RouteType | null => {
-        for (const routePath in routes) {
-            const route = routes[routePath];
-
-            // Match exact route path (if the `usePathAsRoute` flag is true)
-            if (route.config?.usePathAsRoute && currentPath === routePath) {
-                return route;
-            }
-
-            // Check if the linkname matches the current path for the given language
-            const linkname = route.linkname?.[language as keyof LinkNames];
-            if (linkname && currentPath === `/${(linkname as string).toLowerCase()}`) {
-                return route;
-            }
-
-            // Handle route children (nested routes)
-            if (route.children) {
-                const childRoute = findRouteConfig(currentPath, route.children);
-                if (childRoute) {
-                    return childRoute;
-                }
-            }
-        }
-        return null; // Return null if no matching route is found
-    };
+export const getCurrentRoute = (preferredPath?: string): RouteType => {
+    const path = preferredPath || window.location.pathname;
 
     // Start the search from the top-level routes
-    let matchedRoute = findRouteConfig(path, ROUTES_CONF.routes);
+    let matchedRoute = findRoute(path);
 
     // If no route is found, fallback to the wildcard route (error page or 404)
     if (!matchedRoute) {
-        matchedRoute = ROUTES_CONF.routes['/*'] || null;
+        matchedRoute = ROUTES_CONF.routes['/*'];
     }
 
     return matchedRoute;
 };
+
+export function findRoute(currentPath: string): RouteType | null {
+    const normalizedPath = currentPath.replace(/\/+$/, "") || "/";
+    const segments = normalizedPath.split("/").filter(Boolean); // e.g. "/wiki/recipes" → ["wiki", "recipes"]
+
+    let currentRoutes = ROUTES_CONF.routes;
+    let matchedRoute: RouteType | null = null;
+
+    for (let i = 0; i < segments.length; i++) {
+        const segment = segments[i].toLowerCase();
+        let found = false;
+
+        for (const routeKey in currentRoutes) {
+            const cleanKey = routeKey.replace(/^\//, "").toLowerCase();
+            const route = currentRoutes[routeKey];
+
+            const matchesRaw = cleanKey === segment;
+            const matchesAnyLang = Object.entries(route.linkname || {}).some(([, name]) =>
+                (name as string).toLowerCase() === segment
+            );
+
+            if (matchesRaw || matchesAnyLang) {
+                matchedRoute = route;
+                found = true;
+
+                // If there are children, go deeper
+                if (route.children && i + 1 < segments.length) {
+                    currentRoutes = route.children;
+                } else {
+                    currentRoutes = {}; // No deeper levels
+                }
+
+                break;
+            }
+        }
+
+        if (!found) {
+            matchedRoute = currentRoutes["/*"] || null;
+            break;
+        }
+    }
+
+    return matchedRoute;
+}

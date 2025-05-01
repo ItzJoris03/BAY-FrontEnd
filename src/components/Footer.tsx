@@ -3,6 +3,7 @@ import React from "react";
 import logo from '/LogoIcon-inverted.svg';
 import Heading from "./Texts/Heading";
 import Text from "./Texts/Text";
+import { NavLink } from "react-router-dom";
 
 interface LucideIcon {
     Icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
@@ -34,7 +35,12 @@ const quickLinks = [
     "About us", "Our Services", "Expert Team", "Contact us", "Latest News"
 ];
 
-const footerMenu = ["Home", "Terms", "Privacy", "Policy", "Contact"];
+const footerMenu = [
+    { name: "Home", to: "/" },
+    { name: "Terms", to: "/terms" },
+    { name: "Privacy", to: "/privacy" },
+    { name: "Contact", to: "/contact" },
+];
 
 const Footer: React.FC = () => {
     return (
@@ -90,7 +96,7 @@ const Footer: React.FC = () => {
                             <input
                                 type="email"
                                 placeholder="Voer je e-mail in"
-                                className="p-2 rounded-l-lg text-gray-50 border border-white w-64 focus:outline-none"
+                                className="p-2 rounded-l-lg text-gray-50 border border-white w-42 sm:w-64 focus:outline-none"
                             />
                             <button type="submit" className="bg-lime-600 text-neutral-800 px-4 py-2 rounded-r-lg font-semibold">
                                 Inschrijven
@@ -100,15 +106,15 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="border-t border-main text-center text-gray-300 text-sm mt-6 pt-4 flex flex-col md:flex-row justify-between">
+                <div className="border-t border-main text-center text-gray-300 text-sm mt-6 pt-4 flex flex-col-reverse gap-4 md:flex-row justify-between">
                     <p>
                         Copyright &copy; {new Date().getFullYear()}, All Rights Reserved | Designed by
                         <a href="https://jorishummel.com/" target="_blank" className="hover:opacity-70 border-b border-main ml-1">Joris Hummel</a>
                     </p>
-                    <ul className="flex space-x-4 mt-2 md:mt-0">
+                    <ul className="flex space-x-4 mt-2 md:mt-0 md:mx-0 mx-auto">
                         {footerMenu.map(item => (
-                            <li key={item}>
-                                <a href="#" className="text-gray-200 hover:text-gray-200/70 transition">{item}</a>
+                            <li key={item.name}>
+                                <NavLink to={item.to} className="text-gray-200 hover:text-gray-200/70 transition">{item.name}</NavLink>
                             </li>
                         ))}
                     </ul>

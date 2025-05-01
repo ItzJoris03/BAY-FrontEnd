@@ -27,6 +27,9 @@ export interface RoutesConfig {
         default_language: Language;
         language_files: Record<Language, string>;
         domainname: string;
+        languages: {
+            [lang as Language]: string
+        };
         extensions: {
             default: Extension;
             registered: Extension[];

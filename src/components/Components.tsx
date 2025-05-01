@@ -16,7 +16,7 @@ const Page: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const Section: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className = "" }) => {
     return (
-        <section className={`py-24 px-6 ${className}`}>
+        <section className={`relative py-16 sm:py-24 px-6 ${className}`}>
             <div className="container mx-auto">
                 {children}
             </div>

@@ -1,0 +1,189 @@
+{
+    "recipes": [
+        {
+            "id": 1,
+            "title": "Herbal Tea",
+            "image": "https://cdn.pixabay.com/photo/2022/04/04/15/42/herbal-tea-7111626_960_720.jpg",
+            "altText": "Herbal tea with mint and flowers",
+            "description": "A soothing blend of chamomile, lavender, and mint to calm the senses and warm the soul.",
+            "origin": "Inspired by traditional European herbal remedies, this recipe is a gentle nod to forest-based teas made for sleep and clarity.",
+            "ingredients": [
+                "1 cup dried chamomile flowers",
+                "1/2 cup dried lavender",
+                "1/4 cup fresh mint leaves",
+                "Honey (optional)",
+                "Hot water"
+            ],
+            "instructions": [
+                "Boil water in a kettle or pot.",
+                "Add chamomile, lavender, and mint to a teapot or mug.",
+                "Pour boiling water over herbs and steep 5-7 minutes.",
+                "Strain into your favorite mug.",
+                "Add honey if desired. Enjoy hot or iced."
+            ],
+            "tips": [
+                "Steep longer for stronger flavor.",
+                "Try adding lemon balm or ginger for a twist."
+            ],
+            "nutrition": {
+                "calories": 50,
+                "servings": "1",
+                "prepTime": "10 min"
+            },
+            "categories": ["Tea", "Relax"],
+            "recommended": true,
+            "premium": false
+        },
+        {
+            "id": 2,
+            "title": "Lavender Balm",
+            "image": "https://cdn.pixabay.com/photo/2015/06/27/16/18/lavender-823600_960_720.jpg",
+            "altText": "Lavender balm in a jar",
+            "description": "A homemade lavender balm to soothe dry skin.",
+            "origin": "Commonly used in folk medicine to promote skin healing and relaxation.",
+            "ingredients": [
+                "2 tbsp beeswax",
+                "1/4 cup coconut oil",
+                "10 drops lavender oil"
+            ],
+            "instructions": [
+                "Melt beeswax and coconut oil together.",
+                "Remove from heat and stir in lavender oil.",
+                "Pour into a container and let cool."
+            ],
+            "tips": [
+                "Use before bed to help sleep.",
+                "Store in a cool, dark place."
+            ],
+            "nutrition": {
+                "calories": 0,
+                "servings": "N/A",
+                "prepTime": "15 min"
+            },
+            "categories": ["Salve", "Skin"],
+            "recommended": false,
+            "premium": true
+        },
+        {
+            "id": 3,
+            "title": "Mint Infused Water",
+            "image": "https://cdn.pixabay.com/photo/2016/06/29/17/14/drink-1487304_960_720.jpg",
+            "altText": "Glass of mint infused water",
+            "description": "Refreshing and cooling mint drink for summer.",
+            "origin": "Popular in Mediterranean diets as a cooling and hydrating refreshment.",
+            "ingredients": [
+                "Fresh mint leaves",
+                "Cold water",
+                "Lemon slices (optional)"
+            ],
+            "instructions": [
+                "Add mint and lemon to a pitcher of water.",
+                "Chill in the fridge for 2+ hours.",
+                "Serve cold."
+            ],
+            "tips": [
+                "Use sparkling water for a fizzy version.",
+                "Add cucumber slices for extra freshness."
+            ],
+            "nutrition": {
+                "calories": 5,
+                "servings": "2",
+                "prepTime": "5 min"
+            },
+            "categories": ["Drink", "Mint"],
+            "recommended": false,
+            "premium": false
+        },
+        {
+            "id": 4,
+            "title": "Elderberry Syrup",
+            "image": "https://cdn.pixabay.com/photo/2020/07/10/09/20/elder-5390117_960_720.jpg",
+            "altText": "Bottle of elderberry syrup",
+            "description": "Boost your immunity with elderberries.",
+            "origin": "Used for centuries in European herbalism to ward off colds.",
+            "ingredients": [
+                "1 cup dried elderberries",
+                "3 cups water",
+                "1 tbsp ginger",
+                "Honey to taste"
+            ],
+            "instructions": [
+                "Boil berries and ginger in water.",
+                "Simmer 45 mins, mash, strain.",
+                "Cool and mix in honey."
+            ],
+            "tips": [
+                "Store in fridge for up to 3 months.",
+                "Take 1 tbsp daily during cold season."
+            ],
+            "nutrition": {
+                "calories": 60,
+                "servings": "20",
+                "prepTime": "1 hour"
+            },
+            "categories": ["Syrup", "Immune"],
+            "recommended": true,
+            "premium": true
+        },
+        {
+            "id": 5,
+            "title": "Chamomile Sleep Spray",
+            "image": "https://cdn.pixabay.com/photo/2019/02/24/13/53/container-4017616_960_720.jpg",
+            "altText": "Glass spray bottle with chamomile",
+            "description": "Spray to calm nerves and sleep better.",
+            "origin": "Chamomile has long been used in aromatherapy for relaxation.",
+            "ingredients": [
+                "1/2 cup distilled water",
+                "1 tsp witch hazel",
+                "10 drops chamomile essential oil"
+            ],
+            "instructions": [
+                "Mix all ingredients in a spray bottle.",
+                "Shake before each use.",
+                "Spray on pillow or sheets."
+            ],
+            "tips": [
+                "Combine with lavender oil for extra calm.",
+                "Avoid contact with eyes."
+            ],
+            "nutrition": {
+                "calories": 0,
+                "servings": "N/A",
+                "prepTime": "5 min"
+            },
+            "categories": ["Spray", "Relax"],
+            "recommended": false,
+            "premium": false
+        },
+        {
+            "id": 6,
+            "title": "Rose Petal Salve",
+            "image": "https://cdn.pixabay.com/photo/2019/08/21/22/36/cbd-4422125_960_720.jpg",
+            "altText": "Rose salve in a small container",
+            "description": "Gentle healing salve made with roses.",
+            "origin": "Inspired by Victorian-era apothecary recipes.",
+            "ingredients": [
+                "1/4 cup dried rose petals",
+                "1/2 cup olive oil",
+                "2 tbsp beeswax"
+            ],
+            "instructions": [
+                "Infuse rose petals in oil for 1 hour on low heat.",
+                "Strain and add melted beeswax.",
+                "Pour into tins to set."
+            ],
+            "tips": [
+                "Use on lips or dry skin.",
+                "Add a few drops of rose essential oil for stronger scent."
+            ],
+            "nutrition": {
+                "calories": 0,
+                "servings": "N/A",
+                "prepTime": "1.5 hours"
+            },
+            "categories": ["Salve", "Skin"],
+            "recommended": true,
+            "premium": true
+        }
+    ]
+}

@@ -1,8 +1,8 @@
 import { IHeading, IText } from "@/types/texts";
 import textFormatter from "@/utils/TextFormatter";
 
-export const Title: React.FC<IText> = ({ content }) => <Heading lvl={1} content={content} className={`font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl`} />
-export const SubTitle: React.FC<IText> = ({ content, className = '' }) => <Heading lvl={2} content={content} className={`text-sm sm:text-base md:text-lg lg:text-xl ${className}`} />
+export const Title: React.FC<IText> = ({ content, className }) => <Heading lvl={1} content={content} className={`font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl ${className}`} />
+export const SubTitle: React.FC<IText> = ({ content, className = '' }) => <Heading lvl={2} content={content} className={`text-base sm:text-lg md:text-xl lg:text-2xl ${className}`} />
 export const Chapter: React.FC<IText> = ({ content, className = '' }) => <Heading lvl={2} content={content} className={`${className}`} />
 export const ChapterSubtext: React.FC<IText> = ({ content, className = '' }) => <Heading lvl={3} content={content} className={`${className}`} />
 

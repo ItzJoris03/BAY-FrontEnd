@@ -8,6 +8,11 @@
             "se": "se.content",
             "nl": "en.content"
         },
+        "languages": {
+            "com": "English",
+            "se": "Svenska",
+            "nl": "Nederlands"
+        },
         "domainname": "botanicsandyou",
         "extensions": {
             "default": "com",
@@ -48,6 +53,11 @@
                         "nl": "Recepten",
                         "se": "Recepter",
                         "com": "Recipes"
+                    },
+                    "children": {
+                        "/:id": {
+                            "filename": "RecipeDetail"
+                        }
                     }
                 },
                 "/plants": {
@@ -95,7 +105,7 @@
             "config": {
                 "disableMultiLanguageSupport": true
             },
-            "filename": "TermsAndPrivacy",
+            "filename": "LegalPage",
             "attr": {
                 "id": "terms"
             }
@@ -104,7 +114,7 @@
             "config": {
                 "disableMultiLanguageSupport": true
             },
-            "filename": "TermsAndPrivacy",
+            "filename": "LegalPage",
             "attr": {
                 "id": "privacy"
             }
