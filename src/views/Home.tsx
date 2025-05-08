@@ -3,6 +3,7 @@ import Banner from '@/components/Banner';
 import Page from '@/components/Components';
 import FeaturedContent from '@/components/FeaturedContent';
 import Footer from '@/components/Footer';
+import { Loader } from '@/components/Loader';
 import Navbar from '@/components/Navbar/Navbar';
 import NewsletterSignup from '@/components/Newletter';
 import Button from '@/components/Texts/Buttons';
@@ -34,23 +35,26 @@ const HomePage: React.FC = () => {
     return (
         <Page>
             <Navbar />
-            <Banner
-                imgSrc={data.banner.img.src}
-                imgAlt={data.banner.img.alt}
-            >
-                <div className='max-w-4xl text-white'>
-                    <Title content={data.banner.title} />
-                    <SubTitle className="mt-2" content={data.banner.subtitle} />
-                    <Button text={data.banner.button.name} className='mt-12' />
-                </div>
+            {data ? (
+                <>
+                    <Banner
+                        imgSrc={data.banner.img.src}
+                        imgAlt={data.banner.img.alt}
+                    >
+                        <div className='max-w-4xl text-white'>
+                            <Title content={data.banner.title} />
+                            <SubTitle className="mt-2" content={data.banner.subtitle} />
+                            <Button text={data.banner.button.name} className='mt-12' />
+                        </div>
 
-                <ChevronDown size={64} className='absolute bottom-32 text-white left-1/2 -translate-x-1/2 animate-bounce' />
-            </Banner>
-            <AboutMe data={data.about_short} />
-            <TopicsSection data={data.topics} topics={topics} />
-            <FeaturedContent data={data.featured} />
-            <NewsletterSignup data={data.newsletter_signup} />
-            <WorkshopsTeaser data={data.workshop_teaser} />
+                        <ChevronDown size={64} className='absolute bottom-32 text-white left-1/2 -translate-x-1/2 animate-bounce' />
+                    </Banner>
+                    <AboutMe data={data.about_short} />
+                    <TopicsSection data={data.topics} topics={topics} />
+                    <FeaturedContent data={data.featured} />
+                    <NewsletterSignup data={data.newsletter_signup} />
+                    <WorkshopsTeaser data={data.workshop_teaser} /></>
+            ) : <Loader />}
             <Footer />
         </Page>
     );

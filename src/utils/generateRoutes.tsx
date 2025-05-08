@@ -32,6 +32,10 @@ const buildRoute = (path: string, routeObj: Route, lang: string): RouteObject =>
         ? path
         : getRoutePath(path, lang)
 
+
+    const ViewComponent = loadView(routeObj.filename);
+    const viewProps = routeObj.attr || {};
+
     // console.log(`Resolved route: ${path} -> ${routePath}: ${routeObj.filename}.tsx`);
 
     // Return the current route without embedding children
@@ -39,7 +43,7 @@ const buildRoute = (path: string, routeObj: Route, lang: string): RouteObject =>
         path: routePath, // this will be used for matching the route
         element: (
             <React.Suspense fallback={<div>Loading...</div>}>
-                {React.createElement(loadView(routeObj.filename))}
+                <ViewComponent {...viewProps} />
             </React.Suspense>
         ),
     };

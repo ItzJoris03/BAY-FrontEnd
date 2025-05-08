@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import Page, { Section } from '@/components/Components';
 import Footer from '@/components/Footer';
-import { Search, Filter, Star } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import Heading, { Chapter, Title } from '@/components/Texts/Heading';
 import { Link } from 'react-router-dom';
 import { getRoutePath } from '@/utils/routing_helper_functions';
@@ -9,6 +9,7 @@ import { getLanguagePreference } from '@/utils/LanguageHandler';
 import Navbar from '@/components/Navbar/Navbar';
 
 import { recipes as allRecipes } from '@/assets/json/recipes.json';
+import PremiumTag from '@/components/PremiumTag';
 
 
 const RecipeCard = ({ recipe }: { recipe: typeof allRecipes[0] }) => {
@@ -16,11 +17,7 @@ const RecipeCard = ({ recipe }: { recipe: typeof allRecipes[0] }) => {
 
     return (
         <Link to={getRoutePath(window.location.pathname, lang) + `/${recipe.title}`} className="bg-white rounded-xl shadow-md overflow-hidden transition hover:shadow-lg relative">
-            {recipe.premium && (
-                <div className="absolute top-2 left-2 flex gap-2 bg-yellow-500 text-white text-xs font-semibold px-2 py-1 rounded shadow">
-                    <Star size={16} /> Premium
-                </div>
-            )}
+            {recipe.premium && <PremiumTag />}
             <img src={recipe.image} alt={recipe.title} className="h-48 w-full object-cover" />
             <div className="p-4">
                 <Heading lvl={3} className="text-lg font-SourceSans font-semibold text-lime-900" content={recipe.title} />

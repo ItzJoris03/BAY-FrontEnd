@@ -6,7 +6,6 @@ export function getRoutePath(
     lang: Language,
 ): string {
     const segments = originalPath.split("/").filter(Boolean);
-    // const translated = findRoutePathSegments(segments, ROUTES_CONF.routes, lang, oldLang);
     const prev: string[] = [];
 
     const translated: string[] = [];

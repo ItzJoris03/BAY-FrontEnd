@@ -13,14 +13,26 @@ interface LangContentResponse {
 }
 
 interface UseLangContentResult {
-    data: typeof DEFAULT_DATA.data;
+    data?: typeof DEFAULT_DATA.data;
 }
+
+const getHtmlLangCode = (lang: LangCode): string => {
+    switch (lang) {
+        case "nl":
+            return "nl";
+        case "se":
+            return "sv";
+        case "com":
+        default:
+            return "en";
+    }
+};
 
 const useLangContent = (
     lang: LangCode,
     components: string[]
 ): UseLangContentResult => {
-    const [data, setData] = useState<typeof DEFAULT_DATA.data>(DEFAULT_DATA.data);
+    const [data, setData] = useState<typeof DEFAULT_DATA.data>();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -33,15 +45,22 @@ const useLangContent = (
                     `/api/content?${queryParams.toString()}`
                 );
 
-                setData(response.data as typeof DEFAULT_DATA.data);
+                const mergeData = {
+                    ...DEFAULT_DATA.data,
+                    ...response.data
+                }
+
+                setData(mergeData);
+                document.documentElement.lang = lang === "com" ? "en" : getHtmlLangCode(lang);
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (err) {
                 setData(DEFAULT_DATA.data);
+                document.documentElement.lang = "en";
             }
         };
 
-        fetchData();
-    }, [lang, components]);
+        if (!data) fetchData();
+    }, [lang, components, data]);
 
     return { data };
 };

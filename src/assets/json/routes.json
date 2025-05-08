@@ -61,11 +61,60 @@
                     }
                 },
                 "/plants": {
-                    "filename": "Plants",
+                    "filename": "Overview",
                     "linkname": {
                         "nl": "Planten",
                         "se": "Växter",
                         "com": "Plants"
+                    },
+                    "children": {
+                        "/:id": {
+                            "filename": "DetailPage",
+                            "attr": {
+                                "category": "plants"
+                            }
+                        }
+                    },
+                    "attr": {
+                        "category": "plants"
+                    }
+                },
+                "/essential oils": {
+                    "filename": "Overview",
+                    "linkname": {
+                        "nl": "Essentiële Oliën",
+                        "se": "Eteriska Oljor",
+                        "com": "Essential Oils"
+                    },
+                    "children": {
+                        "/:id": {
+                            "filename": "DetailPage",
+                            "attr": {
+                                "category": "oils"
+                            }
+                        }
+                    },
+                    "attr": {
+                        "category": "oils"
+                    }
+                },
+                "/basic oils": {
+                    "filename": "Overview",
+                    "linkname": {
+                        "nl": "Basis Oliën",
+                        "se": "Allmänna Oljor",
+                        "com": "Basic Oils"
+                    },
+                    "children": {
+                        "/:id": {
+                            "filename": "DetailPage",
+                            "attr": {
+                                "category": "basic_oils"
+                            }
+                        }
+                    },
+                    "attr": {
+                        "category": "basic_oils"
                     }
                 }
             }

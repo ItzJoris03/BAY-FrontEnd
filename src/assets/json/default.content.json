@@ -165,6 +165,53 @@
                 }
             ],
             "updated": "Last updated: May 1, 2025"
+        },
+        "encyclopedia": {
+            "usedParts": "Used Part",
+            "origin": "Origin",
+            "growth": "Growth",
+            "usedParts_ext": "Distribution & Origin",
+            "origin_ext": "Growth Behaviour & Lifespan",
+            "growth_ext": "Used Parts & Harvest Time",
+            "keyConstituents": "Key Constituents",
+            "applications": "Applications",
+            "usage": "Methods of Use",
+            "contraindications": "Contraindications",
+            "anecdote": "Anecdote from Folk Medicine",
+            "recommendations": "Recommendation",
+            "relatedPlants": "Related",
+
+            "recipes": "Recipes",
+            "dryness": "Dryness",
+            "suitableForSkinTypes": "Suitable For Skin Types",
+            "storageAndShelfLife": "Storage And Shelf Life",
+            "fattyAcidProfile": "Fatty Acid Profile",
+            "skinBenefits": "Skin Benefits",
+            "ecologicalFootprint": "Ecological Footprint",
+            "safety": "Safety",
+            "oilCombinations": "Oil Combinations",
+            "related": "Related",
+
+            "character": "Character",
+            "constituents": "Constituents",
+            "properties": "Properties",
+            "healthBenefits": "Health Benefits",
+            "dosage": "Dosage",
+            "sustainability": "Sustainability",
+
+            "titles": {
+                "oils": "Essential Oils",
+                "plants": "Plants",
+                "basic_oils": "Basic Oils"
+            },
+            "sorting": {
+                "asc": "Sorting: A-Z",
+                "desc": "Sorting: Z-A"
+            },
+            "premium": "Premium",
+            "free": "Free",
+            "search": "Search by name or latin name...",
+            "no_results": "Unfortunately we couldn't find any matching articles."
         }
     }
 }

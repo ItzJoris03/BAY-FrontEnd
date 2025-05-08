@@ -24,8 +24,20 @@ const Section: React.FC<{ children: React.ReactNode, className?: string }> = ({ 
     );
 }
 
+const ArticleSection: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className = "" }) => {
+    return (
+        <section className={`relative py-12 ${className}`}>
+            <div className="container mx-auto">
+                {children}
+            </div>
+        </section>
+    );
+}
+
+
 export default Page;
 
 export {
-    Section
+    Section,
+    ArticleSection
 };

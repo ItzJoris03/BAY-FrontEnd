@@ -47,10 +47,10 @@ export const checkAndRedirectLanguage = (lang?: Language) => {
     const preferredLanguage = lang || getLanguagePreference();
 
     const currentDomain = window.location.hostname;
-    const isDev = process.env.NODE_ENV === 'development';
+    const isDev = process.env.NODE_ENV === 'development' || currentDomain.includes('jorishummel');
 
     // If we can't find a valid route, fallback to pathname
-    const currentPath = window.location.pathname;
+    const currentPath = decodeURIComponent(window.location.pathname);
     const newPath = getRoutePath(currentPath, preferredLanguage);
 
     if (isDev) {
