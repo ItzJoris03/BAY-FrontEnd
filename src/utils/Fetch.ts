@@ -4,7 +4,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 import cache from './Cache';
 
 class Fetcher {
-    private baseURL: string = 'http://localhost:5000';
+    private baseURL: string = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : `${window.location.origin}:5000`;
     private pendingRequests: Map<string, Promise<unknown>> = new Map();
 
     // Generic request function
