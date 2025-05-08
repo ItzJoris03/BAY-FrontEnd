@@ -42,7 +42,7 @@ const useLangContent = (
                 });
 
                 const response = await fetcher.get<LangContentResponse>(
-                    `/api/content?${queryParams.toString()}`
+                    `/content?${queryParams.toString()}`
                 );
 
                 const mergeData = {
